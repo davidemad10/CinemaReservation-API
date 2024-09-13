@@ -16,4 +16,11 @@ urlpatterns = [
 
     #3.2
     path('rest/fbv/<int:pk>', views.FBV_PK),
+
+    #4.1
+    path('rest/cbv/',views.CBV_List.as_view()),
+
+    #4.2
+    path('rest/cbv/<int:pk>',views.CBV_pk.as_view()),
+    
 ]
