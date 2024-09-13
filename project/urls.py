@@ -23,4 +23,9 @@ urlpatterns = [
     #4.2
     path('rest/cbv/<int:pk>',views.CBV_pk.as_view()),
     
+    #5.1
+    path('rest/mixins/',views.mixins_list.as_view()),
+
+    #5.2
+    path('rest/mixins/<int:pk>',views.mixins_pk.as_view()),
 ]
