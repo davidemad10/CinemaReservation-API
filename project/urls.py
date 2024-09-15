@@ -1,6 +1,14 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from tickets import views
+from rest_framework.routers  import DefaultRouter
+
+
+router=DefaultRouter()
+router.register('guests',views.GuestViewSet,  basename='guest')
+router.register('movies',views.MovieViewSet,  basename='movie')
+router.register('reservations',views.ReservationViewSet,  basename='reservation')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +42,13 @@ urlpatterns = [
 
     #6.2  GET PuT delete from rest framework class based view generics
     path('rest/generic/<int:pk>',views.generics_pk.as_view()),
+    
+    #7 viewsets
+    path('rest/viewsets/',include(router.urls)),
+
+    #8 find movie
+    path('fbv/findmovie',views.find_movie),
+
+    #9 create reservation
+    path('fbv/reservation',views.new_reservation),
 ]

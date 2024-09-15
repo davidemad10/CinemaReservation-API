@@ -7,7 +7,7 @@ from  rest_framework import status,filters
 from  rest_framework.response import Response
 from  rest_framework.views import APIView
 from django.http import Http404
-from  rest_framework import generics,mixins
+from  rest_framework import generics,mixins,viewsets
 
 
 # Create your views here.
@@ -147,4 +147,45 @@ class generics_list(generics.ListCreateAPIView):
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset=Guest.objects.all()
     serializer_class=GuestSerializer
+
+#7 viewSets
+class GuestViewSet(viewsets.ModelViewSet):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    filter_backend=[filters.SearchFilter]
+    search_fields=['movie']
+class ReservationViewSet(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+
+#8 Find movie
+@api_view(['GET'])
+def  find_movie(request):
+    movies = Movie.objects.filter(
+        hall=request.data['hall'],
+        movie=request.data['movie'],
+    )
+    serializer=MovieSerializer(movies,many=True)
+    return Response(serializer.data)
+
+#9 create reservation
+@api_view(['POST'])
+def new_reservation(request):
+    movie=Movie.objects.get(
+        hall=request.data['hall'],
+        movie=request.data['movie'],
+    )
+    guest=Guest()
+    guest.name=request.data['name']
+    guest.mobile=request.data['mobile']
+    guest.save()
+
+    reservation=Reservation()
+    reservation.guest=guest
+    reservation.movie=movie
+    reservation.save()
     
+    return  Response({'message':'reservation created'},status=status.HTTP_201_CREATED)
