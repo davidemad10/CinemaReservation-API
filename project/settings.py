@@ -38,9 +38,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'tickets',
 ]
-REST_FRAMEWORK={}
+#security and permissions
+REST_FRAMEWORK={
+    #basic global auth
+    #username and pass
+    #======================
+
+    # 'DEFAULT_AUTHENTICATION_CLASSES': 
+    # ['rest_framework.authentication.BasicAuthentication'],
+
+
+    # eh al sal7ya 3la al views
+    #there is 4 permission (AllowAny , IsAuthenticated , IsAdminuser , IsAuthenticatedReadOnly)
+
+    # 'DEFAULT_PERMISSION_CLASSES':
+    # ['rest_framework.permissions.IsAuthenticated']
+
+#=================================================================
+    #token global auth
+    'DEFAULT_AUTHENTICATION_CLASSES': 
+    ['rest_framework.authentication.TokenAuthentication'],
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

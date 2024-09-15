@@ -8,6 +8,9 @@ from  rest_framework.response import Response
 from  rest_framework.views import APIView
 from django.http import Http404
 from  rest_framework import generics,mixins,viewsets
+#for authentication
+from rest_framework.authentication import BasicAuthentication ,TokenAuthentication
+from  rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 
 
 # Create your views here.
@@ -143,10 +146,21 @@ class generics_list(generics.ListCreateAPIView):
     queryset=Guest.objects.all()
     serializer_class=GuestSerializer
 
+    #to make auth
+    # authentication_classes=[BasicAuthentication]
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+
+
 #6.2 get put delete 
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset=Guest.objects.all()
     serializer_class=GuestSerializer
+    
+    #to make auth
+    # authentication_classes=[BasicAuthentication]
+    # permission_classes=[IsAuthenticated]
+
 
 #7 viewSets
 class GuestViewSet(viewsets.ModelViewSet):

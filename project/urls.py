@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from tickets import views
 from rest_framework.routers  import DefaultRouter
+from  rest_framework.authtoken.views import obtain_auth_token
 
 
 router=DefaultRouter()
@@ -51,4 +52,10 @@ urlpatterns = [
 
     #9 create reservation
     path('fbv/reservation',views.new_reservation),
+
+    #10 rest auth url (to make logout from the user)
+    path('api-auth',include('rest_framework.urls')),
+
+    #11 Token auth
+    path('token-auth/', obtain_auth_token, name='token_obtain_pair')
 ]
